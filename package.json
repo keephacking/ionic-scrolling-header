@@ -1,0 +1,45 @@
+{
+    "name": "ionic-scrolling-header",
+    "version": "0.1.0",
+    "description": "A plugin to hide the header on scroll",
+    "main": "index.js",
+    "scripts": {
+        "copy:prebuild": "copyfiles -f ./src/package.json ./build",
+        "copy:build": "copyfiles -e ./build/*.js  -f ./build/*.ts -f ./build/*.json ./README.md ./dist",
+        "prebuild": "rimraf ./dist ./build",
+        "es5": "ngc -p ./src/tsconfig-es5.json",
+        "es2015": "ngc -p ./src/tsconfig-es2015.json",
+        "build": "npm run es5 && npm run es2015 && npm run copy:prebuild",
+        "dist": "npm run build && rollup -c && npm run copy:build"
+    },
+    "keywords": [
+        "angular5",
+        "ionic3",
+        "ionic2",
+        "angular4",
+        "header",
+        "scroll"
+    ],
+    "author": "Sachin M S",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/keephacking/ionic-scrolling-header.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@angular/common": "^5.1.2",
+        "@angular/compiler": "^5.1.2",
+        "@angular/compiler-cli": "^5.1.2",
+        "@angular/core": "^5.1.2",
+        "@angular/forms": "^5.1.2",
+        "@angular/platform-browser": "^5.1.2",
+        "@ionic-native/core": "^4.5.2",
+        "@ionic-native/status-bar": "^4.5.2",
+        "copyfiles": "^1.2.0",
+        "ionic-angular": "^3.9.2",
+        "rollup": "^0.53.0",
+        "rxjs": "^5.5.6",
+        "typescript": "^2.6.2",
+        "zone.js": "^0.8.18"
+    }
+}

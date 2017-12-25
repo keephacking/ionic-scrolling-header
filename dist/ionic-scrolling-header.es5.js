@@ -9,17 +9,8 @@ import { App, DomController, Platform } from 'ionic-angular';
  */
 // Keep an eye on this. Should eventually be able to animate show/hide.
 // https://github.com/apache/cordova-plugin-statusbar/pull/37
-class ScrollingHeaderDirective {
-    /**
-     * @param {?} el
-     * @param {?} renderer
-     * @param {?} zone
-     * @param {?} plt
-     * @param {?} domCtrl
-     * @param {?} app
-     * @param {?} statusBar
-     */
-    constructor(el, renderer, zone, plt, domCtrl, app, statusBar$$1) {
+var ScrollingHeaderDirective = /** @class */ (function () {
+    function ScrollingHeaderDirective(el, renderer, zone, plt, domCtrl, app, statusBar$$1) {
         this.el = el;
         this.renderer = renderer;
         this.zone = zone;
@@ -47,18 +38,25 @@ class ScrollingHeaderDirective {
     /**
      * @return {?}
      */
-    ngAfterViewInit() {
+    ScrollingHeaderDirective.prototype.ngAfterViewInit = /**
+     * @return {?}
+     */
+    function () {
         if (this.content) {
             this.startBindings();
         }
         else {
             throw new Error("no content input is given");
         }
-    }
+    };
     /**
      * @return {?}
      */
-    startBindings() {
+    ScrollingHeaderDirective.prototype.startBindings = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
         //init for tabs
         this.tabbarPlacement = this.content._tabs["tabsPlacement"];
         this.tabbarElement = this.content._tabs["_tabbar"].nativeElement;
@@ -69,34 +67,43 @@ class ScrollingHeaderDirective {
         // TODO: init the scroll view and enable scroll events
         this.scroll = new ScrollView(this.app, this.plt, this.domCtrl);
         this.scroll.enableEvents();
-        this.zone.runOutsideAngular(() => {
-            this.scroll.init(this.content.getScrollElement(), this.headerHeight, 0);
-            this.scroll.onScroll = ev => {
-                this.scrollDir = ev.directionY;
-                this.onPageScroll(event);
+        this.zone.runOutsideAngular(function () {
+            _this.scroll.init(_this.content.getScrollElement(), _this.headerHeight, 0);
+            _this.scroll.onScroll = function (ev) {
+                _this.scrollDir = ev.directionY;
+                _this.onPageScroll(event);
             };
             // this.scroll.onScrollEnd = ev => {
             //   console.log("scroll end function");
             // };
-            this.scroll.onScrollStart = ev => {
+            // this.scroll.onScrollEnd = ev => {
+            //   console.log("scroll end function");
+            // };
+            _this.scroll.onScrollStart = function (ev) {
                 console.log("scroll started");
-                if (this.scrollEndTimeout) {
-                    clearTimeout(this.scrollEndTimeout);
+                if (_this.scrollEndTimeout) {
+                    clearTimeout(_this.scrollEndTimeout);
                 }
-                this.render(null); //my-edits
+                _this.render(null); //my-edits
             };
         });
-    }
+    };
     /**
      * @return {?}
      */
-    ngOnDestroy() {
+    ScrollingHeaderDirective.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
         this.scroll && this.scroll.destroy();
-    }
+    };
     /**
      * @return {?}
      */
-    resize() {
+    ScrollingHeaderDirective.prototype.resize = /**
+     * @return {?}
+     */
+    function () {
         // clientHeight and offsetHeight ignore bottom shadow in measurment
         // but if tab is placed above , no need to consider the box shadows
         if (this.tabbarPlacement == "top") {
@@ -105,13 +112,18 @@ class ScrollingHeaderDirective {
         else {
             this.headerHeight = this.el.nativeElement.scrollHeight;
         }
-    }
+    };
     /**
      * @param {?} ts
      * @return {?}
      */
-    render(ts) {
-        let /** @type {?} */ rAFInt = this.plt.raf(ts => this.render(ts));
+    ScrollingHeaderDirective.prototype.render = /**
+     * @param {?} ts
+     * @return {?}
+     */
+    function (ts) {
+        var _this = this;
+        var /** @type {?} */ rAFInt = this.plt.raf(function (ts) { return _this.render(ts); });
         if (this.scroll.isScrolling) {
             //we need animation frame only when someone is scrolling
             this.calculateRender(ts);
@@ -121,27 +133,40 @@ class ScrollingHeaderDirective {
             //and will start when the scroll start event fires
             this.plt.cancelRaf(rAFInt);
         }
-    }
-    /**
-     * @return {?}
-     */
-    get showingHeight() {
-        return this.headerHeight - this.lastHeaderTop;
-    }
+    };
+    Object.defineProperty(ScrollingHeaderDirective.prototype, "showingHeight", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this.headerHeight - this.lastHeaderTop;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * @param {?} event
      * @return {?}
      */
-    onPageScroll(event) {
+    ScrollingHeaderDirective.prototype.onPageScroll = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
         this.scrollTop = event.target.scrollTop;
         this.contentHeight = event.target.clientHeight;
         this.scrollHeight = event.target.scrollHeight;
-    }
+    };
     /**
      * @param {?} timestamp
      * @return {?}
      */
-    calculateRender(timestamp) {
+    ScrollingHeaderDirective.prototype.calculateRender = /**
+     * @param {?} timestamp
+     * @return {?}
+     */
+    function (timestamp) {
+        var _this = this;
         // Gotta be > 0 otherwise we aren't scrolling yet, or are rubberbanding.
         // If scrollTop and lastScrollTop are the same, we've stopped scrolling
         // and no need for calculations
@@ -184,8 +209,8 @@ class ScrollingHeaderDirective {
                         this.pauseForBarAnimation = true;
                         this.isStatusBarShowing = true;
                         this.statusBar.show();
-                        setTimeout(() => {
-                            this.pauseForBarAnimation = false;
+                        setTimeout(function () {
+                            _this.pauseForBarAnimation = false;
                         }, this.pauseForBarDuration);
                     }
                 }
@@ -218,59 +243,87 @@ class ScrollingHeaderDirective {
         else {
             // Don't do anything here since we are rubberbanding past the top.
         }
-    }
+    };
+    //TODO: to make the header stable after the scroll is finished
+    //just to avoid the parts of the header being outside the container
+    //even after the scroll is finished.
+    // onScrollEnd() {
+    //   while (this.lastTopFloored > 0 && this.lastTopFloored < this.headerHeight) {
+    //     if (this.lastHeaderTop > this.headerHeight / 2) {
+    //       this.lastHeaderTop++;
+    //     } else {
+    //       this.lastHeaderTop--;
+    //     }
+    //     this.lastTopFloored = ~~(this.lastHeaderTop* this.hideParallaxFactor);
+    //     this.onTranslate(this.lastTopFloored);
+    //   }
+    // }
+    //TODO: to translate all the elements
+    /**
+     *
+     * @param lastTopFloored -scrolltop after applygin the parallax factor
+     */
     /**
      *
      * @param {?} lastTopFloored -scrolltop after applygin the parallax factor
      * @return {?}
      */
-    onTranslate(lastTopFloored) {
-        this.renderer.setStyle(this.el.nativeElement, this.plt.Css.transform, `translate3d(0, ${-lastTopFloored}px ,0)`);
+    ScrollingHeaderDirective.prototype.onTranslate = /**
+     *
+     * @param {?} lastTopFloored -scrolltop after applygin the parallax factor
+     * @return {?}
+     */
+    function (lastTopFloored) {
+        this.renderer.setStyle(this.el.nativeElement, this.plt.Css.transform, "translate3d(0, " + -lastTopFloored + "px ,0)");
         //TODO:to adjust our content with the header
-        this.renderer.setStyle(this.contentScrollElement, "top", `${-lastTopFloored}px`);
+        this.renderer.setStyle(this.contentScrollElement, "top", -lastTopFloored + "px");
         //TODO:to adjust our tab with the header
         if (this.tabbarPlacement == "top") {
-            this.renderer.setStyle(this.tabbarElement, this.plt.Css.transform, `translate3d(0, ${-lastTopFloored}px ,0)`);
+            this.renderer.setStyle(this.tabbarElement, this.plt.Css.transform, "translate3d(0, " + -lastTopFloored + "px ,0)");
         }
-    }
-}
-ScrollingHeaderDirective.decorators = [
-    { type: Directive, args: [{
-                selector: "[scrollingHeader]"
-            },] },
-];
-/** @nocollapse */
-ScrollingHeaderDirective.ctorParameters = () => [
-    { type: ElementRef, },
-    { type: Renderer2, },
-    { type: NgZone, },
-    { type: Platform, },
-    { type: DomController, },
-    { type: App, },
-    { type: StatusBar, },
-];
-ScrollingHeaderDirective.propDecorators = {
-    "content": [{ type: Input, args: ["scrollingHeader",] },],
-};
+    };
+    ScrollingHeaderDirective.decorators = [
+        { type: Directive, args: [{
+                    selector: "[scrollingHeader]"
+                },] },
+    ];
+    /** @nocollapse */
+    ScrollingHeaderDirective.ctorParameters = function () { return [
+        { type: ElementRef, },
+        { type: Renderer2, },
+        { type: NgZone, },
+        { type: Platform, },
+        { type: DomController, },
+        { type: App, },
+        { type: StatusBar, },
+    ]; };
+    ScrollingHeaderDirective.propDecorators = {
+        "content": [{ type: Input, args: ["scrollingHeader",] },],
+    };
+    return ScrollingHeaderDirective;
+}());
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-class ScrollingHeaderModule {
-}
-ScrollingHeaderModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [
-                    ScrollingHeaderDirective
-                ],
-                exports: [
-                    ScrollingHeaderDirective
-                ]
-            },] },
-];
-/** @nocollapse */
-ScrollingHeaderModule.ctorParameters = () => [];
+var ScrollingHeaderModule = /** @class */ (function () {
+    function ScrollingHeaderModule() {
+    }
+    ScrollingHeaderModule.decorators = [
+        { type: NgModule, args: [{
+                    declarations: [
+                        ScrollingHeaderDirective
+                    ],
+                    exports: [
+                        ScrollingHeaderDirective
+                    ]
+                },] },
+    ];
+    /** @nocollapse */
+    ScrollingHeaderModule.ctorParameters = function () { return []; };
+    return ScrollingHeaderModule;
+}());
 
 /**
  * @fileoverview added by tsickle

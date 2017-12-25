@@ -1,12 +1,12 @@
 export default [{
-        input: "./build/ionic-scrolling-header.es5.js",
+        input: "./build/es5/ionic-scrolling-header.js",
         output: [{
             file: "./dist/ionic-scrolling-header.es5.js",
             format: "es"
         }]
     },
     {
-        input: "./build/ionic-scrolling-header.es2015.js",
+        input: "./build/es2015/ionic-scrolling-header.js",
         output: [{
             file: "./dist/ionic-scrolling-header.es2015.js",
             format: "es",
@@ -14,7 +14,7 @@ export default [{
         }]
     },
     {
-        input: "./build/ionic-scrolling-header.es2015.js",
+        input: "./build/es2015/ionic-scrolling-header.js",
         output: [{
             file: "./dist/ionic-scrolling-header.umd.js",
             format: "umd",

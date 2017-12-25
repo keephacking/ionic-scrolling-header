@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "copy:prebuild": "copyfiles -f ./src/package.json ./build",
-        "copy:build": "copyfiles -e ./build/*.js  -f ./build/*.ts -f ./build/*.json ./README.md ./dist",
+        "copy:build": "copyfiles -e ./build/*.js  -f ./build/es5/*.ts -f ./build/*.json ./README.md ./dist",
         "prebuild": "rimraf ./dist ./build",
         "es5": "ngc -p ./src/tsconfig-es5.json",
         "es2015": "ngc -p ./src/tsconfig-es2015.json",

@@ -7,7 +7,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "declaration": true,
-        "outDir": "../build",
+        "outDir": "../build/es5",
         "lib": ["es5", "es6", "dom"]
     },
     "files": ["./index.ts"],
@@ -15,8 +15,8 @@
         "genDir": "compiled",
         "strictMetadataEmit": true,
         "skipTemplateCodegen": true,
-        "flatModuleOutFile": "ionic-scrolling-header.es5.js",
-        "flatModuleId": "ionic-scrolling-header-es5",
+        "flatModuleOutFile": "ionic-scrolling-header.js",
+        "flatModuleId": "ionic-scrolling-header",
         "annotateForClosureCompiler": true
     },
     "exclude": [

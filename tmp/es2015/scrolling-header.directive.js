@@ -1,16 +1,14 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('ionic-angular/util/scroll-view'), require('@ionic-native/status-bar'), require('ionic-angular')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'ionic-angular/util/scroll-view', '@ionic-native/status-bar', 'ionic-angular'], factory) :
-	(factory((global.ionicScrollingHeader = {}),global.core,global.scrollView,global.statusBar,global.ionicAngular));
-}(this, (function (exports,core,scrollView,statusBar,ionicAngular) { 'use strict';
-
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+import { Directive, ElementRef, Input, Renderer2, AfterViewInit, OnDestroy, NgZone } from "@angular/core";
+import { ScrollView } from "ionic-angular/util/scroll-view";
 // Keep an eye on this. Should eventually be able to animate show/hide.
 // https://github.com/apache/cordova-plugin-statusbar/pull/37
-class ScrollingHeaderDirective {
+import { StatusBar } from "@ionic-native/status-bar";
+import { Platform, App, DomController, Content } from "ionic-angular";
+export class ScrollingHeaderDirective {
     /**
      * @param {?} el
      * @param {?} renderer
@@ -20,14 +18,14 @@ class ScrollingHeaderDirective {
      * @param {?} app
      * @param {?} statusBar
      */
-    constructor(el, renderer, zone, plt, domCtrl, app, statusBar$$1) {
+    constructor(el, renderer, zone, plt, domCtrl, app, statusBar) {
         this.el = el;
         this.renderer = renderer;
         this.zone = zone;
         this.plt = plt;
         this.domCtrl = domCtrl;
         this.app = app;
-        this.statusBar = statusBar$$1;
+        this.statusBar = statusBar;
         this.lastScrollTop = 0;
         this.lastHeaderTop = 0;
         this.isStatusBarShowing = true;
@@ -68,7 +66,7 @@ class ScrollingHeaderDirective {
         // Call to init values.
         this.resize();
         // TODO: init the scroll view and enable scroll events
-        this.scroll = new scrollView.ScrollView(this.app, this.plt, this.domCtrl);
+        this.scroll = new ScrollView(this.app, this.plt, this.domCtrl);
         this.scroll.enableEvents();
         this.zone.runOutsideAngular(() => {
             this.scroll.init(this.content.getScrollElement(), this.headerHeight, 0);
@@ -236,59 +234,91 @@ class ScrollingHeaderDirective {
     }
 }
 ScrollingHeaderDirective.decorators = [
-    { type: core.Directive, args: [{
+    { type: Directive, args: [{
                 selector: "[scrollingHeader]"
             },] },
 ];
 /** @nocollapse */
 ScrollingHeaderDirective.ctorParameters = () => [
-    { type: core.ElementRef, },
-    { type: core.Renderer2, },
-    { type: core.NgZone, },
-    { type: ionicAngular.Platform, },
-    { type: ionicAngular.DomController, },
-    { type: ionicAngular.App, },
-    { type: statusBar.StatusBar, },
+    { type: ElementRef, },
+    { type: Renderer2, },
+    { type: NgZone, },
+    { type: Platform, },
+    { type: DomController, },
+    { type: App, },
+    { type: StatusBar, },
 ];
 ScrollingHeaderDirective.propDecorators = {
-    "content": [{ type: core.Input, args: ["scrollingHeader",] },],
+    "content": [{ type: Input, args: ["scrollingHeader",] },],
 };
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-class ScrollingHeaderModule {
+function ScrollingHeaderDirective_tsickle_Closure_declarations() {
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
+    ScrollingHeaderDirective.decorators;
+    /**
+     * @nocollapse
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
+     */
+    ScrollingHeaderDirective.ctorParameters;
+    /** @type {!Object<string,!Array<{type: !Function, args: (undefined|!Array<?>)}>>} */
+    ScrollingHeaderDirective.propDecorators;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.scroll;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.headerHeight;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.lastScrollTop;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.lastHeaderTop;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.isStatusBarShowing;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.pauseForBarAnimation;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.pauseForBarDuration;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.scrollEndTimeout;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.scrollTop;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.contentHeight;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.scrollHeight;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.scrollChange;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.scrollDir;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.pastBottom;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.lastTopFloored;
+    /**
+     * TODO: Some values to make a parallax effect
+     * @type {?}
+     */
+    ScrollingHeaderDirective.prototype.showParallaxFactor;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.hideParallaxFactor;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.content;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.contentScrollElement;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.tabbarElement;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.tabbarPlacement;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.el;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.renderer;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.zone;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.plt;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.domCtrl;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.app;
+    /** @type {?} */
+    ScrollingHeaderDirective.prototype.statusBar;
 }
-ScrollingHeaderModule.decorators = [
-    { type: core.NgModule, args: [{
-                declarations: [
-                    ScrollingHeaderDirective
-                ],
-                exports: [
-                    ScrollingHeaderDirective
-                ]
-            },] },
-];
-/** @nocollapse */
-ScrollingHeaderModule.ctorParameters = () => [];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * Generated bundle index. Do not edit.
- */
-
-exports.ScrollingHeaderModule = ScrollingHeaderModule;
-exports.ScrollingHeaderDirective = ScrollingHeaderDirective;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+//# sourceMappingURL=scrolling-header.directive.js.map

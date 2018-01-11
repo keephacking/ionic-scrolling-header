@@ -23,4 +23,5 @@ An angular directive to make the header hide with scrolling
 </ion-header>`
 * :) good to go
 ## Demo
+### [For Demo Check Here](https://stackblitz.com/edit/ionic-scrolling-header-demo)
 ![Plugin preview](https://raw.githubusercontent.com/keephacking/ionic-scrolling-header/master/demo/demo.gif)

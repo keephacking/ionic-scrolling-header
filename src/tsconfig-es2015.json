@@ -1,22 +1,25 @@
 {
     "compilerOptions": {
+        "declaration": true,
         "target": "es2015",
         "module": "es2015",
+        "baseUrl": ".",
         "sourceMap": true,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "outDir": "../build/es2015",
-        "lib": ["es5", "es6", "dom"]
+        "outDir": "../tmp/es2015",
+        "rootDir": ".",
+        "skipLibCheck": true,
+        "lib": ["es2015", "dom"]
     },
-    "files": ["./index.ts"],
+    "files": ["./public_api.ts"],
     "angularCompilerOptions": {
-        "genDir": "compiled",
+        "annotateForClosureCompiler": true,
         "strictMetadataEmit": true,
         "skipTemplateCodegen": true,
         "flatModuleOutFile": "ionic-scrolling-header.js",
-        "flatModuleId": "ionic-scrolling-header",
-        "annotateForClosureCompiler": true
+        "flatModuleId": "ionic-scrolling-header"
     },
     "exclude": [
         "node_modules",

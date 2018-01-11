@@ -4,13 +4,15 @@
     "description": "A plugin to hide the header on scroll",
     "main": "index.js",
     "scripts": {
-        "copy:prebuild": "copyfiles -f ./src/package.json ./build",
-        "copy:build": "copyfiles -e ./build/*.js  -f ./build/es5/*.ts -f ./build/*.json ./README.md ./dist",
-        "prebuild": "rimraf ./dist ./build",
-        "es5": "ngc -p ./src/tsconfig-es5.json",
+        "copy:prebuild": "copyfiles -f ./src/package.json -e ./tmp/**/*.js  -f ./tmp/es5/*.ts -f ./tmp/es5/*.json ./README.md ./dist",
         "es2015": "ngc -p ./src/tsconfig-es2015.json",
+        "es5": "ngc -p ./src/tsconfig-es5.json",
+        "prebuild": "rimraf ./dist ./tmp",
         "build": "npm run es5 && npm run es2015 && npm run copy:prebuild",
-        "dist": "npm run build && rollup -c && npm run copy:build"
+        "dist": "npm run build && npm run rollup-es2015 && npm run rollup-es5 &&  npm run rollup-umd",
+        "rollup-es2015": "rollup -c rollup-es2015.config.js",
+        "rollup-es5": "rollup -c rollup-es5.config.js",
+        "rollup-umd": "rollup -c rollup-umd.config.js"
     },
     "keywords": [
         "angular5",

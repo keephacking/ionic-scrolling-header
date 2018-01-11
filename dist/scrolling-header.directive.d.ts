@@ -1,5 +1,4 @@
 import { ElementRef, Renderer2, AfterViewInit, OnDestroy, NgZone } from "@angular/core";
-import { StatusBar } from "@ionic-native/status-bar";
 import { Platform, App, DomController, Content } from "ionic-angular";
 export declare class ScrollingHeaderDirective implements AfterViewInit, OnDestroy {
     private el;
@@ -8,8 +7,6 @@ export declare class ScrollingHeaderDirective implements AfterViewInit, OnDestro
     plt: Platform;
     private domCtrl;
     private app;
-    private statusBar;
-    private scroll;
     private headerHeight;
     private lastScrollTop;
     private lastHeaderTop;
@@ -33,12 +30,12 @@ export declare class ScrollingHeaderDirective implements AfterViewInit, OnDestro
     contentScrollElement: HTMLElement;
     tabbarElement: HTMLElement;
     tabbarPlacement: string;
-    constructor(el: ElementRef, renderer: Renderer2, zone: NgZone, plt: Platform, domCtrl: DomController, app: App, statusBar: StatusBar);
+    constructor(el: ElementRef, renderer: Renderer2, zone: NgZone, plt: Platform, domCtrl: DomController, app: App);
     ngAfterViewInit(): void;
     startBindings(): void;
     ngOnDestroy(): void;
     resize(): void;
-    render(ts: any): void;
+    render(ev: any): void;
     readonly showingHeight: number;
     private onPageScroll(event);
     calculateRender(timestamp: any): void;

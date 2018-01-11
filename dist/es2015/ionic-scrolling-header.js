@@ -1,14 +1,10 @@
 import { Directive, ElementRef, Input, NgModule, NgZone, Renderer2 } from '@angular/core';
-import { ScrollView } from 'ionic-angular/util/scroll-view';
-import { StatusBar } from '@ionic-native/status-bar';
 import { App, DomController, Platform } from 'ionic-angular';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-// Keep an eye on this. Should eventually be able to animate show/hide.
-// https://github.com/apache/cordova-plugin-statusbar/pull/37
 class ScrollingHeaderDirective {
     /**
      * @param {?} el
@@ -17,16 +13,14 @@ class ScrollingHeaderDirective {
      * @param {?} plt
      * @param {?} domCtrl
      * @param {?} app
-     * @param {?} statusBar
      */
-    constructor(el, renderer, zone, plt, domCtrl, app, statusBar$$1) {
+    constructor(el, renderer, zone, plt, domCtrl, app) {
         this.el = el;
         this.renderer = renderer;
         this.zone = zone;
         this.plt = plt;
         this.domCtrl = domCtrl;
         this.app = app;
-        this.statusBar = statusBar$$1;
         this.lastScrollTop = 0;
         this.lastHeaderTop = 0;
         this.isStatusBarShowing = true;
@@ -50,6 +44,7 @@ class ScrollingHeaderDirective {
     ngAfterViewInit() {
         if (this.content) {
             this.startBindings();
+            // this.startBindings_old();
         }
         else {
             throw new Error("no content input is given");
@@ -67,31 +62,18 @@ class ScrollingHeaderDirective {
         // Call to init values.
         this.resize();
         // TODO: init the scroll view and enable scroll events
-        this.scroll = new ScrollView(this.app, this.plt, this.domCtrl);
-        this.scroll.enableEvents();
         this.zone.runOutsideAngular(() => {
-            this.scroll.init(this.content.getScrollElement(), this.headerHeight, 0);
-            this.scroll.onScroll = ev => {
+            this.content.ionScroll.subscribe((ev) => {
                 this.scrollDir = ev.directionY;
                 this.onPageScroll(event);
-            };
-            // this.scroll.onScrollEnd = ev => {
-            //   console.log("scroll end function");
-            // };
-            this.scroll.onScrollStart = ev => {
-                console.log("scroll started");
-                if (this.scrollEndTimeout) {
-                    clearTimeout(this.scrollEndTimeout);
-                }
-                this.render(null); //my-edits
-            };
+                this.render(ev);
+            });
         });
     }
     /**
      * @return {?}
      */
     ngOnDestroy() {
-        this.scroll && this.scroll.destroy();
     }
     /**
      * @return {?}
@@ -105,22 +87,17 @@ class ScrollingHeaderDirective {
         else {
             this.headerHeight = this.el.nativeElement.scrollHeight;
         }
+        //init content for translation
+        // this.renderer.setStyle(this.contentScrollElement,"bottom",`${-this.headerHeight}px`);
     }
     /**
-     * @param {?} ts
+     * @param {?} ev
      * @return {?}
      */
-    render(ts) {
-        let /** @type {?} */ rAFInt = this.plt.raf(ts => this.render(ts));
-        if (this.scroll.isScrolling) {
-            //we need animation frame only when someone is scrolling
-            this.calculateRender(ts);
-        }
-        else {
-            //if no scrolling then we can cancel the current animation frame
-            //and will start when the scroll start event fires
-            this.plt.cancelRaf(rAFInt);
-        }
+    render(ev) {
+        ev.domWrite(() => {
+            this.calculateRender(null);
+        });
     }
     /**
      * @return {?}
@@ -157,7 +134,7 @@ class ScrollingHeaderDirective {
                 if (this.isStatusBarShowing && !this.pauseForBarAnimation) {
                     // StatusBar.isVisible
                     this.isStatusBarShowing = false;
-                    this.statusBar.hide();
+                    // this.statusBar.hide();
                 }
                 // Shrink the header with the slower hideParallaxFactor
                 this.lastHeaderTop += this.scrollChange * this.hideParallaxFactor;
@@ -183,7 +160,7 @@ class ScrollingHeaderDirective {
                     if (!this.pauseForBarAnimation) {
                         this.pauseForBarAnimation = true;
                         this.isStatusBarShowing = true;
-                        this.statusBar.show();
+                        // this.statusBar.show();
                         setTimeout(() => {
                             this.pauseForBarAnimation = false;
                         }, this.pauseForBarDuration);
@@ -227,6 +204,11 @@ class ScrollingHeaderDirective {
     onTranslate(lastTopFloored) {
         this.renderer.setStyle(this.el.nativeElement, this.plt.Css.transform, `translate3d(0, ${-lastTopFloored}px ,0)`);
         //TODO:to adjust our content with the header
+        // this.renderer.setStyle(
+        //   this.contentScrollElement,
+        //   this.plt.Css.transform,
+        //   `translate3d(0, ${-lastTopFloored}px ,0)`
+        // );
         this.renderer.setStyle(this.contentScrollElement, "top", `${-lastTopFloored}px`);
         //TODO:to adjust our tab with the header
         if (this.tabbarPlacement == "top") {
@@ -247,7 +229,6 @@ ScrollingHeaderDirective.ctorParameters = () => [
     { type: Platform, },
     { type: DomController, },
     { type: App, },
-    { type: StatusBar, },
 ];
 ScrollingHeaderDirective.propDecorators = {
     "content": [{ type: Input, args: ["scrollingHeader",] },],
@@ -271,6 +252,11 @@ ScrollingHeaderModule.decorators = [
 ];
 /** @nocollapse */
 ScrollingHeaderModule.ctorParameters = () => [];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle

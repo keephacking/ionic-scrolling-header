@@ -3,6 +3,14 @@ export default [{
     output: [{
         file: "./dist/umd/ionic-scrolling-header.umd.js",
         format: "umd",
-        name: "ionicScrollingHeader"
-    }]
+        name: "ionicScrollingHeader",
+        globals: {
+            '@angular/core': 'ng.core',
+            'ionic-angular': 'ionicAngular'
+        }
+    }],
+    external: [
+        '@angular/core',
+        'ionic-angular'
+    ]
 }]

@@ -13,13 +13,18 @@
         "skipLibCheck": true,
         "lib": ["es2015", "dom"]
     },
-    "files": ["./public_api.ts"],
+    "files": ["./index.ts"],
     "angularCompilerOptions": {
         "annotateForClosureCompiler": true,
         "strictMetadataEmit": true,
         "skipTemplateCodegen": true,
         "flatModuleOutFile": "ionic-scrolling-header.js",
-        "flatModuleId": "ionic-scrolling-header"
+        "flatModuleId": "ionic-scrolling-header",
+        "paths": {
+            "@angular/*": [
+                "../node_modules/@angular/*"
+            ]
+        }
     },
     "exclude": [
         "node_modules",

@@ -10,6 +10,11 @@
         "strictMetadataEmit": true,
         "skipTemplateCodegen": true,
         "flatModuleOutFile": "ionic-scrolling-header.js",
-        "flatModuleId": "ionic-scrolling-header"
+        "flatModuleId": "ionic-scrolling-header",
+        "paths": {
+            "@angular/*": [
+                "../node_modules/@angular/*"
+            ]
+        }
     }
 }

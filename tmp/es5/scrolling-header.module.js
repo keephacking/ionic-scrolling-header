@@ -2,8 +2,8 @@
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-import { NgModule } from "@angular/core";
-import { ScrollingHeaderDirective } from "./scrolling-header.directive";
+import { NgModule } from '@angular/core';
+import { ScrollingHeaderDirective } from './scrolling-header.directive';
 export { ScrollingHeaderDirective } from "./scrolling-header.directive";
 var ScrollingHeaderModule = /** @class */ (function () {
     function ScrollingHeaderModule() {

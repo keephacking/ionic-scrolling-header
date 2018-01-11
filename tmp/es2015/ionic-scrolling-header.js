@@ -5,5 +5,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
-export { ScrollingHeaderModule, ScrollingHeaderDirective } from "./public_api";
+export { ScrollingHeaderModule, ScrollingHeaderDirective } from './index';
 //# sourceMappingURL=ionic-scrolling-header.js.map

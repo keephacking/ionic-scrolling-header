@@ -4,7 +4,7 @@
     "description": "A plugin to hide the header on scroll",
     "main": "index.js",
     "scripts": {
-        "copy:prebuild": "copyfiles -f ./src/package.json -e ./tmp/**/*.js  -f ./tmp/es5/*.ts -f ./tmp/es5/*.json ./README.md ./dist",
+        "copy:prebuild": "copyfiles -f ./src/package.json -e ./tmp/**/*.js  -f ./tmp/es5/*.ts -f ./tmp/es5/*.json ./README.md ./tmp/es5/*.map ./dist",
         "es2015": "ngc -p ./src/tsconfig-es2015.json",
         "es5": "ngc -p ./src/tsconfig-es5.json",
         "prebuild": "rimraf ./dist ./tmp",
@@ -35,8 +35,6 @@
         "@angular/core": "^5.1.2",
         "@angular/forms": "^5.1.2",
         "@angular/platform-browser": "^5.1.2",
-        "@ionic-native/core": "^4.5.2",
-        "@ionic-native/status-bar": "^4.5.2",
         "copyfiles": "^1.2.0",
         "ionic-angular": "^3.9.2",
         "rollup": "^0.53.0",

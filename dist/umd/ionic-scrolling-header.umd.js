@@ -1,24 +1,21 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('ionic-angular/util/scroll-view'), require('@ionic-native/status-bar'), require('ionic-angular')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'ionic-angular/util/scroll-view', '@ionic-native/status-bar', 'ionic-angular'], factory) :
-	(factory((global.ionicScrollingHeader = {}),global.core,global.scrollView,global.statusBar,global.ionicAngular));
-}(this, (function (exports,core,scrollView,statusBar,ionicAngular) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('ionic-angular')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'ionic-angular'], factory) :
+	(factory((global.ionicScrollingHeader = {}),global.ng.core,global.ionicAngular));
+}(this, (function (exports,core,ionicAngular) { 'use strict';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-// Keep an eye on this. Should eventually be able to animate show/hide.
-// https://github.com/apache/cordova-plugin-statusbar/pull/37
 var ScrollingHeaderDirective = /** @class */ (function () {
-    function ScrollingHeaderDirective(el, renderer, zone, plt, domCtrl, app, statusBar$$1) {
+    function ScrollingHeaderDirective(el, renderer, zone, plt, domCtrl, app) {
         this.el = el;
         this.renderer = renderer;
         this.zone = zone;
         this.plt = plt;
         this.domCtrl = domCtrl;
         this.app = app;
-        this.statusBar = statusBar$$1;
         this.lastScrollTop = 0;
         this.lastHeaderTop = 0;
         this.isStatusBarShowing = true;
@@ -45,6 +42,7 @@ var ScrollingHeaderDirective = /** @class */ (function () {
     function () {
         if (this.content) {
             this.startBindings();
+            // this.startBindings_old();
         }
         else {
             throw new Error("no content input is given");
@@ -66,27 +64,12 @@ var ScrollingHeaderDirective = /** @class */ (function () {
         // Call to init values.
         this.resize();
         // TODO: init the scroll view and enable scroll events
-        this.scroll = new scrollView.ScrollView(this.app, this.plt, this.domCtrl);
-        this.scroll.enableEvents();
         this.zone.runOutsideAngular(function () {
-            _this.scroll.init(_this.content.getScrollElement(), _this.headerHeight, 0);
-            _this.scroll.onScroll = function (ev) {
+            _this.content.ionScroll.subscribe(function (ev) {
                 _this.scrollDir = ev.directionY;
                 _this.onPageScroll(event);
-            };
-            // this.scroll.onScrollEnd = ev => {
-            //   console.log("scroll end function");
-            // };
-            // this.scroll.onScrollEnd = ev => {
-            //   console.log("scroll end function");
-            // };
-            _this.scroll.onScrollStart = function (ev) {
-                console.log("scroll started");
-                if (_this.scrollEndTimeout) {
-                    clearTimeout(_this.scrollEndTimeout);
-                }
-                _this.render(null); //my-edits
-            };
+                _this.render(ev);
+            });
         });
     };
     /**
@@ -96,7 +79,6 @@ var ScrollingHeaderDirective = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this.scroll && this.scroll.destroy();
     };
     /**
      * @return {?}
@@ -113,27 +95,22 @@ var ScrollingHeaderDirective = /** @class */ (function () {
         else {
             this.headerHeight = this.el.nativeElement.scrollHeight;
         }
+        //init content for translation
+        // this.renderer.setStyle(this.contentScrollElement,"bottom",`${-this.headerHeight}px`);
     };
     /**
-     * @param {?} ts
+     * @param {?} ev
      * @return {?}
      */
     ScrollingHeaderDirective.prototype.render = /**
-     * @param {?} ts
+     * @param {?} ev
      * @return {?}
      */
-    function (ts) {
+    function (ev) {
         var _this = this;
-        var /** @type {?} */ rAFInt = this.plt.raf(function (ts) { return _this.render(ts); });
-        if (this.scroll.isScrolling) {
-            //we need animation frame only when someone is scrolling
-            this.calculateRender(ts);
-        }
-        else {
-            //if no scrolling then we can cancel the current animation frame
-            //and will start when the scroll start event fires
-            this.plt.cancelRaf(rAFInt);
-        }
+        ev.domWrite(function () {
+            _this.calculateRender(null);
+        });
     };
     Object.defineProperty(ScrollingHeaderDirective.prototype, "showingHeight", {
         get: /**
@@ -183,7 +160,7 @@ var ScrollingHeaderDirective = /** @class */ (function () {
                 if (this.isStatusBarShowing && !this.pauseForBarAnimation) {
                     // StatusBar.isVisible
                     this.isStatusBarShowing = false;
-                    this.statusBar.hide();
+                    // this.statusBar.hide();
                 }
                 // Shrink the header with the slower hideParallaxFactor
                 this.lastHeaderTop += this.scrollChange * this.hideParallaxFactor;
@@ -209,7 +186,7 @@ var ScrollingHeaderDirective = /** @class */ (function () {
                     if (!this.pauseForBarAnimation) {
                         this.pauseForBarAnimation = true;
                         this.isStatusBarShowing = true;
-                        this.statusBar.show();
+                        // this.statusBar.show();
                         setTimeout(function () {
                             _this.pauseForBarAnimation = false;
                         }, this.pauseForBarDuration);
@@ -277,6 +254,11 @@ var ScrollingHeaderDirective = /** @class */ (function () {
     function (lastTopFloored) {
         this.renderer.setStyle(this.el.nativeElement, this.plt.Css.transform, "translate3d(0, " + -lastTopFloored + "px ,0)");
         //TODO:to adjust our content with the header
+        // this.renderer.setStyle(
+        //   this.contentScrollElement,
+        //   this.plt.Css.transform,
+        //   `translate3d(0, ${-lastTopFloored}px ,0)`
+        // );
         this.renderer.setStyle(this.contentScrollElement, "top", -lastTopFloored + "px");
         //TODO:to adjust our tab with the header
         if (this.tabbarPlacement == "top") {
@@ -296,7 +278,6 @@ var ScrollingHeaderDirective = /** @class */ (function () {
         { type: ionicAngular.Platform, },
         { type: ionicAngular.DomController, },
         { type: ionicAngular.App, },
-        { type: statusBar.StatusBar, },
     ]; };
     ScrollingHeaderDirective.propDecorators = {
         "content": [{ type: core.Input, args: ["scrollingHeader",] },],
@@ -325,6 +306,11 @@ var ScrollingHeaderModule = /** @class */ (function () {
     ScrollingHeaderModule.ctorParameters = function () { return []; };
     return ScrollingHeaderModule;
 }());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle

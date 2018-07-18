@@ -1,24 +1,17 @@
 {
+    "$schema": "./node_modules/ng-packagr/package.schema.json",
     "name": "ionic-scrolling-header",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "A plugin to hide the header on scroll",
-    "main": "index.js",
+    "private": true,
     "scripts": {
-        "copy:prebuild": "copyfiles -f ./src/package.json -e ./tmp/**/*.js  -f ./tmp/es5/*.ts -f ./tmp/es5/*.json ./README.md ./tmp/es5/*.map ./dist",
-        "es2015": "ngc -p ./src/tsconfig-es2015.json",
-        "es5": "ngc -p ./src/tsconfig-es5.json",
-        "prebuild": "rimraf ./dist ./tmp",
-        "build": "npm run es5 && npm run es2015 && npm run copy:prebuild",
-        "dist": "npm run build && npm run rollup-es2015 && npm run rollup-es5 &&  npm run rollup-umd",
-        "rollup-es2015": "rollup -c rollup-es2015.config.js",
-        "rollup-es5": "rollup -c rollup-es5.config.js",
-        "rollup-umd": "rollup -c rollup-umd.config.js"
+        "build:lib": "ng-packagr -p ./src/package.json"
     },
     "keywords": [
+        "angular4",
         "angular5",
         "ionic3",
         "ionic2",
-        "angular4",
         "header",
         "scroll"
     ],
@@ -29,17 +22,6 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@angular/common": "^5.1.2",
-        "@angular/compiler": "^5.1.2",
-        "@angular/compiler-cli": "^5.1.2",
-        "@angular/core": "^5.1.2",
-        "@angular/forms": "^5.1.2",
-        "@angular/platform-browser": "^5.1.2",
-        "copyfiles": "^1.2.0",
-        "ionic-angular": "^3.9.2",
-        "rollup": "^0.53.0",
-        "rxjs": "^5.5.6",
-        "typescript": "^2.6.2",
-        "zone.js": "^0.8.18"
+        "ng-packagr": "^4.0.0-rc.3"
     }
 }

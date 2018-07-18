@@ -11,7 +11,7 @@ import {
 // https://github.com/apache/cordova-plugin-statusbar/pull/37
 // import { StatusBar } from "@ionic-native/status-bar";
 
-import { Platform, App, DomController, Content } from "ionic-angular";
+import { Platform, Content } from "ionic-angular";
 
 @Directive({
   selector: "[scrollingHeader]"
@@ -33,8 +33,6 @@ export class ScrollingHeaderDirective
 
   private pauseForBarAnimation: boolean = false;
   private pauseForBarDuration = 500;
-  // private pauseForBarTimeout: Function;
-  private scrollEndTimeout: number;
 
   // private savedConDim;
   // render vars so we aren't scoping new ones each time
@@ -42,7 +40,6 @@ export class ScrollingHeaderDirective
   private contentHeight = 0;
   private scrollHeight = 0;
   private scrollChange = 0;
-  private scrollDir = null;
   private pastBottom: boolean;
   private lastTopFloored = 0;
 
@@ -64,9 +61,7 @@ export class ScrollingHeaderDirective
     private el: ElementRef,
     private renderer: Renderer2,
     private zone: NgZone,
-    public plt: Platform,
-    private domCtrl: DomController,
-    private app: App,
+    public plt: Platform
     // private statusBar: StatusBar
   ) { }
   ngAfterViewInit() {
@@ -74,14 +69,16 @@ export class ScrollingHeaderDirective
       this.startBindings();
       // this.startBindings_old(); 
     } else {
-      throw new Error("no content input is given");
+      console.error("No content is provided for ionic scroling header!")
     }
   }
   startBindings() {
 
     //init for tabs
-    this.tabbarPlacement = this.content._tabs["tabsPlacement"];
-    this.tabbarElement = this.content._tabs["_tabbar"].nativeElement;
+    if (this.content._tabs) {
+      this.tabbarPlacement = this.content._tabs["tabsPlacement"];
+      this.tabbarElement = this.content._tabs["_tabbar"].nativeElement;
+    }
 
     //Cache the scroll element and tabbar inside our variables
     this.contentScrollElement = this.content.getScrollElement();
@@ -93,7 +90,6 @@ export class ScrollingHeaderDirective
 
     this.zone.runOutsideAngular(() => {
       this.content.ionScroll.subscribe((ev) => {
-        this.scrollDir = ev.directionY;
         this.onPageScroll(event);
         this.render(ev);
       });
@@ -110,16 +106,16 @@ export class ScrollingHeaderDirective
     } else {
       this.headerHeight = this.el.nativeElement.scrollHeight;
     }
-        //init content for translation
-        // this.renderer.setStyle(this.contentScrollElement,"bottom",`${-this.headerHeight}px`);
+    //init content for translation
+    // this.renderer.setStyle(this.contentScrollElement,"bottom",`${-this.headerHeight}px`);
   }
 
   render(ev) {
-    ev.domWrite(() => { 
+    ev.domWrite(() => {
       this.calculateRender(null);
     })
   }
-  
+
   get showingHeight(): number {
     return this.headerHeight - this.lastHeaderTop;
   }
@@ -231,7 +227,7 @@ export class ScrollingHeaderDirective
   //     this.onTranslate(this.lastTopFloored);
   //   }
   // }
-  
+
   //TODO: to translate all the elements
   /**
    *

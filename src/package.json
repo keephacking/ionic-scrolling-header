@@ -1,21 +1,20 @@
 {
+    "$schema": "../node_modules/ng-packagr/package.schema.json",
     "name": "ionic-scrolling-header",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "A plugin to hide the header on scroll",
-    "main": "./umd/ionic-scrolling-header.umd.js",
-    "module": "./es5/ionic-scrolling-header.js",
-    "es2015": "./es2015/ionic-scrolling-header.js",
-    "keywords": ["angular4", "angular5", "ionic3", "ionic2", "header", "scroll"],
-    "author": "Sachin M S",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/keephacking/ionic-scrolling-header.git"
-    },
     "license": "MIT",
+    "private": true,
     "peerDependencies": {
         "@angular/core": "^5.1.2",
         "rxjs": "^5.5.6",
         "zone.js": "^0.8.18",
         "ionic-angular": "^3.9.2"
+    },
+    "ngPackage": {
+        "lib": {
+            "entryFile": "public_api.ts"
+        },
+        "dest": "../dist"
     }
 }

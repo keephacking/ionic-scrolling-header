@@ -1,0 +1,7 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+export { ScrollingHeaderModule, ScrollingHeaderDirective } from "./scrolling-header.module";
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL2lvbmljLXNjcm9sbGluZy1oZWFkZXIvIiwic291cmNlcyI6WyJwdWJsaWNfYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFBQSxnRUFBYywyQkFBMkIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gXCIuL3Njcm9sbGluZy1oZWFkZXIubW9kdWxlXCI7XHJcbmV4cG9ydCAqIGZyb20gXCIuL3Njcm9sbGluZy1oZWFkZXIuZGlyZWN0aXZlXCI7Il19

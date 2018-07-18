@@ -1,1 +1,0 @@
-{"version":3,"file":"scrolling-header.module.js","sourceRoot":"","sources":["../../src/scrolling-header.module.ts"],"names":[],"mappings":";;;;AAAA,OAAO,EAAC,QAAQ,EAAE,MAAM,eAAe,CAAC;AACxC,OAAO,EAAE,wBAAwB,EAAE,MAAM,8BAA8B,CAAC;AACxE,yCAAc,8BAA8B,CAAC;AAS7C,MAAM;;;YARL,QAAQ,SAAC;gBACR,YAAY,EAAE;oBACZ,wBAAwB;iBACzB;gBACD,OAAO,EAAC;oBACN,wBAAwB;iBACzB;aACF"}

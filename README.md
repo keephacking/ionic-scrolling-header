@@ -5,7 +5,7 @@ An angular directive to make the header hide with scrolling
 
 ## Usage
 
-* install- `npm install ionic-scrolling-header --sav-dev`
+* install- `npm install ionic-scrolling-header --save-dev`
 
 * add to your module `import {ScrollingHeaderModule} from 'ionic-scrolling-header';`
 

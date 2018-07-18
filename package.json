@@ -1,11 +1,12 @@
 {
     "$schema": "./node_modules/ng-packagr/package.schema.json",
     "name": "ionic-scrolling-header",
-    "version": "0.2.0",
+    "version": "0.1.0",
     "description": "A plugin to hide the header on scroll",
     "private": true,
     "scripts": {
-        "build:lib": "ng-packagr -p ./src/package.json"
+        "build": "ng-packagr -p ./src/package.json",
+        "postbuild": "copyfiles -f README.md ./dist"
     },
     "keywords": [
         "angular4",
@@ -22,6 +23,7 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "ng-packagr": "^4.0.0-rc.3"
+        "ng-packagr": "^4.0.0-rc.3",
+        "copyfiles": "^2.0.0"
     }
 }
